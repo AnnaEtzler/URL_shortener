@@ -1,15 +1,19 @@
-package com.shortener.URL.shortener.entities;
+package com.shortener.URL.shortener.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.List;
 
 @Entity
 @Table(name = "user")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class User {
     @Id
@@ -27,5 +31,8 @@ public class User {
 
     @Column(name = "role")
     private String role;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    private List<URL> urlList;
 
 }
