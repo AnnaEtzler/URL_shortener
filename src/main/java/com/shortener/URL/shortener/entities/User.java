@@ -1,4 +1,4 @@
-package com.shortener.URL_shortener.Entities;
+package com.shortener.URL.shortener.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
