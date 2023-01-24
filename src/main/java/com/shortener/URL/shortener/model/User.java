@@ -21,6 +21,7 @@ public class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
+
     @NotBlank(message = "Name is mandatory")
     @Column(name = "username")
     private String username;

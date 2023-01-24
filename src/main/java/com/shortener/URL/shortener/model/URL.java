@@ -17,7 +17,6 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 public class URL {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
