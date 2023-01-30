@@ -8,13 +8,21 @@
 hello, on this page you can use a program that can handle the length of your URL
 </body>
 
-    enter THE URL
 
 
-<form action="#" th:action="@{/shortner}" th:object="${url}" method="post">
+
+<form  th:method="post" th:action="@{/shorter}" th:object="${url}">
+<label for="shortUrl" > your URL </label>
+
+    <input type="text" th:field="*{shortUrl}" id="shortUrl">
 
 
+    <input type="submit" value="GO">
 </form>
+
+
+
+
 
 
 </html>
