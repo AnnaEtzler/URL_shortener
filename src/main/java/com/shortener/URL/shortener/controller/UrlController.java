@@ -25,18 +25,18 @@ public class UrlController {
         return "guest";
     }
 
-    @PostMapping("/shorter")
+    @PostMapping("/shorter") // спросить про модель атрибут ????
     public String shortUrl( @ModelAttribute("url") @Valid URL url, BindingResult bindingResult, Model model) {
         URL u = (URL) model.getAttribute("url");
-        if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors() || u == null) {
             return "redirect:/guest" ;
         }
-        String s = null;
-        if (u != null) {
-            //s = u.getLongUrl() + "now_short";
+        if(u.getShortUrl().equals("")){  // норм так делать?
             u.setShortUrl(u.generateShortUrl(url.getLongUrl()));
-            urlRepository.save(u);
         }
+
+        urlRepository.save(u);
+
         return "redirect:/guest";
     }
 
