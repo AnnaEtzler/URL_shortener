@@ -1,7 +1,9 @@
 package com.shortener.URL.shortener.controller;
 
 import com.shortener.URL.shortener.models.URL;
+import com.shortener.URL.shortener.repository.URLRepository;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,9 +13,14 @@ import org.springframework.web.bind.annotation.*;
 //@RequestMapping(value = "")
 public class UrlController {
 
+    @Autowired
+    private URLRepository urlRepository ;
+
     @GetMapping("/guest")
     public String getUrlShortnerPage(Model model){
         model.addAttribute("url", new URL());
+        Iterable<URL> all = urlRepository.findAll();
+        model.addAttribute("allUrls", all);
 
         return "guest";
     }
@@ -26,12 +33,11 @@ public class UrlController {
         }
         String s = null;
         if (u != null) {
-            s = u.getLongUrl() + "now_short";
-            u.setShortUrl(s);
+            //s = u.getLongUrl() + "now_short";
+            u.setShortUrl(u.generateShortUrl(url.getLongUrl()));
+            urlRepository.save(u);
         }
-
-        return "shorter";
-
+        return "redirect:/guest";
     }
 
 
