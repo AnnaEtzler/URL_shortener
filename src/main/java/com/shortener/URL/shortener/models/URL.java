@@ -14,9 +14,11 @@ public class URL {
     @Column(name = "id", nullable = false)
     private Long id;
     @Column(name = "shortUrl")
-    @NotBlank
+
     private String shortUrl;
+
     @Column(name = "longUrl")
+    @NotBlank
     private String longUrl;
 
 }

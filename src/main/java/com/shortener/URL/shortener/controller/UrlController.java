@@ -35,20 +35,12 @@ public class UrlController {
     }
 */
     @PostMapping("/shorter")
-    public String shortUrl(@ModelAttribute("url") @Valid URL url, BindingResult bindingResult, Model model) {
-        //model.addAttribute("message", url);
-
-
+    public String shortUrl( @ModelAttribute("url") @Valid URL url, BindingResult bindingResult, Model model) {
         URL u = (URL) model.getAttribute("url");
-
-        if (u == null) {
+        if (bindingResult.hasErrors()) {
             return "redirect:/guest" ;
-
-
         }
-
         String s = u.getLongUrl() + "now_short";
-
         u.setShortUrl(s);
 
         System.out.println("ok");
