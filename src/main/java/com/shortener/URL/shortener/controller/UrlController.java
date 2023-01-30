@@ -38,11 +38,18 @@ public class UrlController {
     public String shortUrl(@ModelAttribute("url") @Valid URL url, BindingResult bindingResult, Model model) {
         //model.addAttribute("message", url);
 
+
         URL u = (URL) model.getAttribute("url");
 
-        if (u != null) {
-            u.setLongUrl("long12345");
+        if (u == null) {
+            return "redirect:/guest" ;
+
+
         }
+
+        String s = u.getLongUrl() + "now_short";
+
+        u.setShortUrl(s);
 
         System.out.println("ok");
 

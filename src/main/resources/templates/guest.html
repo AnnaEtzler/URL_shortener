@@ -12,9 +12,9 @@ hello, on this page you can use a program that can handle the length of your URL
 
 
 <form  th:method="post" th:action="@{/shorter}" th:object="${url}">
-<label for="shortUrl" > your URL </label>
+<label for="longUrl" > your URL </label>
 
-    <input type="text" th:field="*{shortUrl}" id="shortUrl">
+    <input type="text" th:field="*{longUrl}" id="longUrl">
 
 
     <input type="submit" value="GO">
