@@ -8,7 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-// @RequestMapping(value = "/start") страничка выдает ошибку но без start работает
+//@RequestMapping(value = "")
 public class UrlController {
 
     @GetMapping("/guest")
@@ -17,23 +17,7 @@ public class UrlController {
 
         return "guest";
     }
-/*
-    @PostMapping
-    public String makeShortUrl(@PathVariable(name = "url") String url,
-        //  @Valid URL url, нам нужен только Coffee соответсвующий проверкам
-       // BindingResult result, // содержит результаты проверки
-        // должен быть после @Valid
-        Model model){
 
-//<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>     <br/>
-//    <input type="text" th:field="*{url}" id="url" placeholder="url">
-//
-//    <br/>
-//    <input type="submit" value="long URL">
-
-        return "redirect:/guest";
-    }
-*/
     @PostMapping("/shorter")
     public String shortUrl( @ModelAttribute("url") @Valid URL url, BindingResult bindingResult, Model model) {
         URL u = (URL) model.getAttribute("url");
@@ -42,9 +26,6 @@ public class UrlController {
         }
         String s = u.getLongUrl() + "now_short";
         u.setShortUrl(s);
-
-        System.out.println("ok");
-
         return "shorter";
 
     }
