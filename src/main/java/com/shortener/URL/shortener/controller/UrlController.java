@@ -1,30 +1,41 @@
 package com.shortener.URL.shortener.controller;
 
 import com.shortener.URL.shortener.models.URL;
-import com.shortener.URL.shortener.service.UrlService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+//@RequestMapping(value = "")
 public class UrlController {
 
-    @GetMapping("/start")
-    public String getHelloPage(){
-        return "hello";
+    @GetMapping("/guest")
+    public String getUrlShortnerPage(Model model){
+        model.addAttribute("url", new URL());
+
+        return "guest";
     }
 
-    @Autowired
-    private UrlService urlService;
+    @PostMapping("/shorter")
+    public String shortUrl( @ModelAttribute("url") @Valid URL url, BindingResult bindingResult, Model model) {
+        URL u = (URL) model.getAttribute("url");
+        if (bindingResult.hasErrors()) {
+            return "redirect:/guest" ;
+        }
+        String s = null;
+        if (u != null) {
+            s = u.getLongUrl() + "now_short";
+            u.setShortUrl(s);
+        }
 
-    @PostMapping("/shorten")
-    public ResponseEntity shortenUrl(@PathVariable String url) {
-        URL shortUrlEntry = urlService.generateShortUrl(url);
-
-        return ResponseEntity.ok(shortUrlEntry);
+        return "shorter";
 
     }
+
+
+
+
+
 }
