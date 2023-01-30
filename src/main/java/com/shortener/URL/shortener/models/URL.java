@@ -1,15 +1,12 @@
 package com.shortener.URL.shortener.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 
 @Entity
 @AllArgsConstructor
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 public class URL {
     @Id
@@ -17,6 +14,7 @@ public class URL {
     @Column(name = "id", nullable = false)
     private Long id;
     @Column(name = "shortUrl")
+    @NotBlank
     private String shortUrl;
     @Column(name = "longUrl")
     private String longUrl;
