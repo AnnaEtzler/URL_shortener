@@ -24,8 +24,12 @@ public class UrlController {
         if (bindingResult.hasErrors()) {
             return "redirect:/guest" ;
         }
-        String s = u.getLongUrl() + "now_short";
-        u.setShortUrl(s);
+        String s = null;
+        if (u != null) {
+            s = u.getLongUrl() + "now_short";
+            u.setShortUrl(s);
+        }
+
         return "shorter";
 
     }
