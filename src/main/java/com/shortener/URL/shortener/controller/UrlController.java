@@ -34,10 +34,14 @@ public class UrlController {
         if(u.getShortUrl().equals("")){  // норм так делать?
             u.setShortUrl(u.generateShortUrl(url.getLongUrl()));
         }
-
         urlRepository.save(u);
-
         return "redirect:/guest";
+    }
+
+    @GetMapping("/guest/{link}")
+    public String getPageWithShortURL(@PathVariable(name = "link") String link){
+        URL url = urlRepository.findByShortUrl(link);
+        return "redirect:" + url.getLongUrl();
     }
 
 

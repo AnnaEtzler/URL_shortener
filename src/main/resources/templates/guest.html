@@ -33,8 +33,17 @@ hello, on this page you can use a program that can handle the length of your URL
             </thead>
             <tbody>
             <tr th:each="url : ${allUrls}">
-                <td th:text="${url.longUrl}"></td>
-                <td th:text="${url.shortUrl}"></td>
+
+                <td><a th:href="@{/guest/{link}(link=${url.getLongUrl})}">
+                    <p th:text="${url.longUrl}"></p>
+
+                </a></td>
+
+                <td><a th:href="@{/guest/{link}(link=${url.getShortUrl})}">
+                    <p th:text="${url.shortUrl}"></p>
+
+                </a></td>
+
 
             </tr>
             </tbody>
