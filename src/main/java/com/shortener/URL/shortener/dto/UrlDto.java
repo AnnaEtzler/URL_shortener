@@ -9,7 +9,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UrlDto {
-    private String url;
-    private String expiration_date;
-
+    private String shortUrl;
+    private String longUrl;
 }
