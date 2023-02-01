@@ -24,12 +24,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UrlController {
 
     @Autowired
-    private URLRepository urlRepository ;
+    private URLRepository urlRepository;
     @Autowired
     private UrlService urlService;
 
     @GetMapping("/guest")
-    public String getUrlShortnerPage(Model model){
+    public String getUrlShortnerPage(Model model) {
         model.addAttribute("url", new URL());
         Iterable<URL> all = urlRepository.findAll();
         model.addAttribute("allUrls", all);
@@ -38,20 +38,24 @@ public class UrlController {
     }
 
     @PostMapping("/shorter") // спросить про модель атрибут ????
-    public String shortUrl( @ModelAttribute("url") @Valid URL url, BindingResult bindingResult, Model model) {
+    public String shortUrl(@ModelAttribute("url") @Valid URL url, BindingResult bindingResult, Model model) {
         URL u = (URL) model.getAttribute("url");
         if (bindingResult.hasErrors() || u == null) {
-            return "redirect:/guest" ;
+            return "redirect:/guest";
         }
-        if(u.getShortUrl().equals("")){  // норм так делать?
-            u.setShortUrl( urlService.generateShortUrl(u.getLongUrl()));
+        if (u.getShortUrl().equals("")) {  // норм так делать?
+            String shortUrl = urlService.generateShortUrl(u.getLongUrl());
+            while (urlService.checkShortUrl(shortUrl)) {
+                shortUrl = urlService.changeShortUrl(shortUrl);
+            }
+            u.setShortUrl(shortUrl);
         }
         urlRepository.save(u);
         return "redirect:/guest";
     }
 
     @GetMapping("/guest/{link}")
-    public String getPageWithShortURL(@PathVariable(name = "link") String link){
+    public String getPageWithShortURL(@PathVariable(name = "link") String link) {
         URL url = urlRepository.findByShortUrl(link);
         return "redirect:" + url.getLongUrl();
     }

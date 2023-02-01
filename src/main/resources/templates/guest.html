@@ -45,6 +45,7 @@
                 <tr>
                     <th>long</th>
                     <th>short</th>
+                    <th>time</th>
 
                 </tr>
                 </thead>
@@ -58,6 +59,11 @@
 
                     <td><a th:href="@{/guest/{link}(link=${url.getShortUrl})}">
                         <p th:text="${url.shortUrl}"></p>
+
+                    </a></td>
+
+                    <td><a th:href="@{/guest/{link}(link=${url.getMillis})}">
+                        <p th:text="${url.millis}"></p>
 
                     </a></td>
 

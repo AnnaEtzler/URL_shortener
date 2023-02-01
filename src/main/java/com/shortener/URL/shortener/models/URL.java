@@ -27,17 +27,14 @@ public class URL {
     @Column(name = "longUrl")
     @NotBlank
     private String longUrl;
+    @Column(name = "time")
+    private Long millis;
 
 
-    public String generateShortUrl(String url) {
-        // generating murmur3 based hash key as short URL
-        String key = Hashing.murmur3_32_fixed().hashString(url, Charset.defaultCharset()).toString();
-        return key;
+    private void setMillis(){
+        this.millis = System.currentTimeMillis();
     }
 
 
-
-    @Column(name = "create")
-    private Long millis;
 }
 
