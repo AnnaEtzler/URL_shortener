@@ -15,16 +15,24 @@
     <div class="parent">
         <p>hello, on this page you can use a program that can handle the length of your URL</p>
 
-    </div>
+
     <form class="tabelle" th:method="post" th:action="@{/shorter}" th:object="${url}">
         <label for="longUrl" > your URL </label>
         <input type="text" th:field="*{longUrl}" id="longUrl">
-
+        <br>
         <label for="shortUrl" > text for your URL </label>
         <input type="text" th:field="*{shortUrl}" id="shortUrl">
 
         <input type="submit" value="GO">
     </form>
+
+        <br>
+        <p>Result</p>
+        <p th:text="${result}"></p>
+
+
+
+
 
     <div th:switch="${allUrls}">
         <h2 th:case="null">No urls yet!</h2>
@@ -60,7 +68,7 @@
         </div>
     </div>
 
-
+    </div>
 
 </main>
 
