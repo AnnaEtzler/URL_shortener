@@ -2,22 +2,22 @@ package com.shortener.URL.shortener.controller;
 
 import com.shortener.URL.shortener.models.URL;
 import com.shortener.URL.shortener.repository.URLRepository;
-<<<<<<< HEAD
+
 import jakarta.validation.Valid;
-=======
+
 import com.shortener.URL.shortener.service.UrlService;
->>>>>>> 666b0e7c44f01bebc289a5be6754b5ab9ce3cefe
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-<<<<<<< HEAD
+
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-=======
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
->>>>>>> 666b0e7c44f01bebc289a5be6754b5ab9ce3cefe
+
 
 @Controller
 //@RequestMapping(value = "")
@@ -25,8 +25,9 @@ public class UrlController {
 
     @Autowired
     private URLRepository urlRepository ;
+    @Autowired
+    private UrlService urlService;
 
-<<<<<<< HEAD
     @GetMapping("/guest")
     public String getUrlShortnerPage(Model model){
         model.addAttribute("url", new URL());
@@ -43,7 +44,7 @@ public class UrlController {
             return "redirect:/guest" ;
         }
         if(u.getShortUrl().equals("")){  // норм так делать?
-            u.setShortUrl(u.generateShortUrl(url.getLongUrl()));
+            u.setShortUrl( urlService.generateShortUrl(u.getLongUrl()));
         }
         urlRepository.save(u);
         return "redirect:/guest";
@@ -59,7 +60,7 @@ public class UrlController {
 
 
 
-=======
+/*
     @PostMapping("/shorter")
     public String shortenUrl(String url, Model model) {
         URL shortUrlEntry = urlService.generateShortUrl(url);
@@ -73,6 +74,6 @@ public class UrlController {
         URL longUrl = urlService.getEncodedUrl(shortUrl);
         return "redirect:" + longUrl;
     }
+*/
 
->>>>>>> 666b0e7c44f01bebc289a5be6754b5ab9ce3cefe
 }
