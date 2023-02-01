@@ -13,6 +13,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
+
+@Builder
+
 @Table(name = "urls")
 public class URL {
     @Id
@@ -25,10 +28,16 @@ public class URL {
     @NotBlank
     private String longUrl;
 
+
     public String generateShortUrl(String url) {
         // generating murmur3 based hash key as short URL
         String key = Hashing.murmur3_32_fixed().hashString(url, Charset.defaultCharset()).toString();
         return key;
     }
 
+
+
+    @Column(name = "create")
+    private Long millis;
 }
+
