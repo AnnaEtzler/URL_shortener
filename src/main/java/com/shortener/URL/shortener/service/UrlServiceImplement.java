@@ -14,12 +14,11 @@ public class UrlServiceImplement implements UrlService{
     @Autowired
     private URLRepository urlRepository;
 
+
     @Override
-    public URL generateShortUrl(String url) {
+    public String generateShortUrl(String url) {
         String shortUrl = Hashing.murmur3_32().hashString(url, Charset.defaultCharset()).toString();
-        URL encodedUrl = URL.builder().shortUrl(shortUrl).longUrl(url).build();
-        URL entry = urlRepository.save(encodedUrl);
-        return entry;
+        return shortUrl;
     }
 
     @Override
@@ -30,6 +29,19 @@ public class UrlServiceImplement implements UrlService{
 
     @Override
     public void deleteShortLink(URL url) {
+
         urlRepository.delete(url);
+    }
+
+    @Override
+    public boolean checkShortUrl(String shortUrl) {
+
+        return urlRepository.findByShortUrl(shortUrl) != null;
+    }
+
+    @Override
+    public String changeShortUrl(String shortUrl) {
+        StringBuilder sb = new StringBuilder(shortUrl).append(System.currentTimeMillis());
+        return sb.toString();
     }
 }

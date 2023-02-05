@@ -1,21 +1,21 @@
 package com.shortener.URL.shortener.models;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.google.common.hash.Hashing;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
+
 
 @Entity
 @AllArgsConstructor
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
+
 @Builder
+
 @Table(name = "urls")
 public class URL {
     @Id
@@ -27,6 +27,14 @@ public class URL {
     @Column(name = "longUrl")
     @NotBlank
     private String longUrl;
-    @Column(name = "create")
+    @Column(name = "time")
     private Long millis;
+
+
+    private void setMillis(){
+        this.millis = System.currentTimeMillis();
+    }
+
+
 }
+

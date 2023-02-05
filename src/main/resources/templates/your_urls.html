@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<header class="header"><h1>Urls in database</h1></header>
+<main>
+  <div class="parent">
+    <form class="urlstabelle" th:method="post" th:action="@{/shorter}" th:object="${url}">
+
+     <div th:switch="${allUrls}">
+      <h2 th:case="null">No urls yet!</h2>
+      <div th:case="*">
+        <table class="urlstabelle" border="1">
+          <thead>
+          <tr>
+            <th>long</th>
+            <th>short</th>
+            <th>time</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="url : ${allUrls}">
+
+            <td><a th:href="@{/guest/{link}(link=${url.getLongUrl})}">
+              <p th:text="${url.longUrl}"></p>
+
+            </a></td>
+
+            <td><a th:href="@{/guest/{link}(link=${url.getShortUrl})}">
+              <p th:text="${url.shortUrl}"></p>
+
+            </a></td>
+
+            <td><a th:href="@{/guest/{link}(link=${url.getMillis})}">
+              <p th:text="${url.millis}"></p>
+
+            </a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+     </div>
+    </form>
+  </div>
+
+</main>
+
+</body>
+
+</html>
