@@ -30,16 +30,21 @@ public class UrlController {
 
     @GetMapping("/guest")
     public String getUrlShortnerPage(Model model) {
-        model.addAttribute("url", new URL());
-        Iterable<URL> all = urlRepository.findAll();
-        model.addAttribute("allUrls", all);
+        model.addAttribute("urls", new URL());
 
         return "guest";
     }
+    @GetMapping("/your_urls")
+    public String getAllUrl(Model model) {
+        model.addAttribute("urls", new URL());
+        Iterable<URL> all = urlRepository.findAll();
+        model.addAttribute("allUrls", all);
+        return "your_urls";
+    }
 
     @PostMapping("/shorter") // спросить про модель атрибут ????
-    public String shortUrl(@ModelAttribute("url") @Valid URL url, BindingResult bindingResult, Model model) {
-        URL u = (URL) model.getAttribute("url");
+    public String shortUrl(@ModelAttribute("urls") @Valid URL url, BindingResult bindingResult, Model model) {
+        URL u = (URL) model.getAttribute("urls");
         if (bindingResult.hasErrors() || u == null) {
             return "redirect:/guest";
         }
@@ -51,7 +56,7 @@ public class UrlController {
             u.setShortUrl(shortUrl);
         }
         urlRepository.save(u);
-        return "redirect:/guest";
+        return "redirect:/your_urls";
     }
 
     @GetMapping("/guest/{link}")
@@ -62,22 +67,5 @@ public class UrlController {
 
 
 
-
-
-/*
-    @PostMapping("/shorter")
-    public String shortenUrl(String url, Model model) {
-        URL shortUrlEntry = urlService.generateShortUrl(url);
-        model.addAttribute("short", shortUrlEntry);
-        return "short-created";
-    }
-
-    @GetMapping("/{shortUrl}")
-    public String redirect(@PathVariable String shortUrl)
-    {
-        URL longUrl = urlService.getEncodedUrl(shortUrl);
-        return "redirect:" + longUrl;
-    }
-*/
 
 }
