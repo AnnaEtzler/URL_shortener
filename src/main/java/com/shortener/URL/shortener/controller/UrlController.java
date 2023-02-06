@@ -30,21 +30,20 @@ public class UrlController {
 
     @GetMapping("/guest")
     public String getUrlShortnerPage(Model model) {
-        model.addAttribute("urls", new URL());
-
+        model.addAttribute("url", new URL());
         return "guest";
     }
     @GetMapping("/your_urls")
     public String getAllUrl(Model model) {
-        model.addAttribute("urls", new URL());
+
         Iterable<URL> all = urlRepository.findAll();
         model.addAttribute("allUrls", all);
         return "your_urls";
     }
 
     @PostMapping("/shorter") // спросить про модель атрибут ????
-    public String shortUrl(@ModelAttribute("urls") @Valid URL url, BindingResult bindingResult, Model model) {
-        URL u = (URL) model.getAttribute("urls");
+    public String shortUrl(@ModelAttribute("url") @Valid URL url, BindingResult bindingResult, Model model) {
+        URL u = (URL) model.getAttribute("url");
         if (bindingResult.hasErrors() || u == null) {
             return "redirect:/guest";
         }

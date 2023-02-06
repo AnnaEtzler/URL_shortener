@@ -28,12 +28,10 @@ public class URL {
     @NotBlank
     private String longUrl;
     @Column(name = "time")
-    private Long millis;
+    private Long millis = System.currentTimeMillis();
 
 
-    private void setMillis(){
-        this.millis = System.currentTimeMillis();
-    }
+
 
 
 }
