@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
+import java.sql.SQLException;
+
+
 @Controller
 //@RequestMapping(value = "")
-public class UrlController {
+public class UrlController extends SQLException{
 
     @Autowired
     private URLRepository urlRepository;
@@ -41,9 +44,10 @@ public class UrlController {
         return "your_urls";
     }
 
-    @PostMapping("/shorter") // спросить про модель атрибут ????
+    @PostMapping("/shorter")
     public String shortUrl(@ModelAttribute("url") @Valid URL url, BindingResult bindingResult, Model model) {
         URL u = (URL) model.getAttribute("url");
+
         if (bindingResult.hasErrors() || u == null) {
             return "redirect:/guest";
         }
@@ -54,7 +58,14 @@ public class UrlController {
             }
             u.setShortUrl(shortUrl);
         }
+        try{
         urlRepository.save(u);
+
+        }
+        catch (Exception exeption){ // не получается вставаить SqLExeption  и close()
+            return "redirect:/guest";
+
+        }
         return "redirect:/your_urls";
     }
 

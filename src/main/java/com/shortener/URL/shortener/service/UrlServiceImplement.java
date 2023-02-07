@@ -41,7 +41,7 @@ public class UrlServiceImplement implements UrlService{
 
     @Override
     public String changeShortUrl(String shortUrl) {
-        StringBuilder sb = new StringBuilder(shortUrl).append(System.currentTimeMillis());
+        StringBuilder sb = new StringBuilder(shortUrl).append((int)(Math.random()*100));
         return sb.toString();
     }
 }
