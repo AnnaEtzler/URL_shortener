@@ -36,11 +36,13 @@ public class UrlController extends SQLException{
         model.addAttribute("url", new URL());
         return "guest";
     }
-    @GetMapping("/your_urls")
-    public String getAllUrl(Model model) {
+    @GetMapping("/your_urls/{shortUrl}")
+    public String getAllUrl(@PathVariable(name = "shortUrl") String shortUrl, Model model) {
+        URL url = urlRepository.findByShortUrl(shortUrl);
 
-        Iterable<URL> all = urlRepository.findAll();
-        model.addAttribute("allUrls", all);
+        model.addAttribute("shortUrl", url.getShortUrl());
+        model.addAttribute("longUrl", url.getLongUrl());
+
         return "your_urls";
     }
 
@@ -58,6 +60,7 @@ public class UrlController extends SQLException{
             }
             u.setShortUrl(shortUrl);
         }
+        model.addAttribute("short", u.getShortUrl());
         try{
         urlRepository.save(u);
 
@@ -66,13 +69,21 @@ public class UrlController extends SQLException{
             return "redirect:/guest";
 
         }
-        return "redirect:/your_urls";
+
+        return "redirect:/your_urls/"+u.getShortUrl();
     }
 
     @GetMapping("/guest/{link}")
     public String getPageWithShortURL(@PathVariable(name = "link") String link) {
         URL url = urlRepository.findByShortUrl(link);
         return "redirect:" + url.getLongUrl();
+    }
+
+
+    @GetMapping("{link}")
+    public String getPageWithLongURL(@PathVariable(name = "link") String link) {
+        //URL url = urlRepository.findByShortUrl(link);
+        return "redirect:" + link;
     }
 
 

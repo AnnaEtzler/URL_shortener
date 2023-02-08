@@ -7,46 +7,22 @@
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-<header class="header"><h1>Urls in database</h1></header>
+<header class="header"><h1>This is your URL</h1></header>
+
 <main>
-  <div class="parent">
-    <form class="urlstabelle" th:method="post" th:action="@{/shorter}" th:object="${url}">
+  <div class="about">
+    <p>Long</p>
 
-     <div th:switch="${allUrls}">
-      <h2 th:case="null">No urls yet!</h2>
-      <div th:case="*">
-        <table class="urlstabelle" border="1">
-          <thead>
-          <tr>
-            <th>long</th>
-            <th>short</th>
-            <th>time</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr th:each="url : ${allUrls}">
+    <a th:href="@{{link}(link=${longUrl})}">
+      <p th:text="${longUrl}"></p>
+    </a>
 
-            <td><a th:href="@{/guest/{link}(link=${url.getLongUrl})}">
-              <p th:text="${url.longUrl}"></p>
 
-            </a></td>
-
-            <td><a th:href="@{/guest/{link}(link=${url.getShortUrl})}">
-              <p th:text="${url.shortUrl}"></p>
-
-            </a></td>
-
-            <td><a th:href="@{/guest/{link}(link=${url.getMillis})}">
-              <p th:text="${url.millis}"></p>
-
-            </a></td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-     </div>
-    </form>
-  </div>
+    <p>Short</p>
+    <a th:href="@{/guest/{link}(link=${shortUrl})}">
+      <p th:text="${shortUrl}"></p>
+    </a>
+    </div>
 
 </main>
 

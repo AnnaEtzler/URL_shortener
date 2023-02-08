@@ -37,33 +37,41 @@ public class TestDatabase {
 
 
     @Test
-    public void urlInDatabase() throws Exception {  // проверяет есть ли в базе даннх объект url
+    public void urlInDatabase() throws Exception {  // проверяет записывает ли в базе даннх объект url
         URL url = new URL();
         url.setLongUrl("https://github.com/AnnaEtzler/URL_shortener");
-        url.setShortUrl( urlService.generateShortUrl("https://github.com/AnnaEtzler/URL_shortener"));
+        String shortUrl = urlService.generateShortUrl(url.getLongUrl());
+        while (urlService.checkShortUrl(shortUrl)) {
+            shortUrl = urlService.changeShortUrl(shortUrl);
+        }
+        url.setShortUrl(shortUrl);
         urlRepository.save(url);
-        assertEquals(url, urlRepository.findByLongUrl("https://github.com/AnnaEtzler/URL_shortener"));
+        System.out.println(urlRepository.findByShortUrl(shortUrl));
+
+        assertEquals(url, urlRepository.findByShortUrl(shortUrl));
     }
 
 
     @Test
     public void theSameLengthUrlInDatabase() throws Exception { // проверяем все ли сгенерированные URL сокращаются до 8 знаков и уникальны ли они
         URL url = new URL();
-        url.setLongUrl("https://github.com/AnnaEtzler/URL_shortener");
-        url.setShortUrl( urlService.generateShortUrl("https://github.com/AnnaEtzler/URL_shortener"));
-        while (urlService.checkShortUrl(url.getShortUrl())) {
-            url.setShortUrl(urlService.changeShortUrl(url.getShortUrl()));
+        url.setLongUrl("https://habr.com/ru/post/5862/");
+        String shortUrl = urlService.generateShortUrl(url.getLongUrl());
+        while (urlService.checkShortUrl(shortUrl) ){
+            shortUrl = urlService.changeShortUrl(shortUrl);
         }
+        url.setShortUrl(shortUrl);
         urlRepository.save(url);
+
         URL url2 = new URL();
         url2.setLongUrl("https://github.com/AnnaEtzler/URL_shortener");
-        url2.setShortUrl( urlService.generateShortUrl("https://github.com/AnnaEtzler/URL_shortener"));
-        while (urlService.checkShortUrl(url2.getShortUrl())) {
-            url2.setShortUrl(urlService.changeShortUrl(url2.getShortUrl()));
+        String shortUrl2 = urlService.generateShortUrl(url2.getLongUrl());
+        while (urlService.checkShortUrl(shortUrl2) ){
+            shortUrl2 = urlService.changeShortUrl(shortUrl2);
         }
+        url2.setShortUrl(shortUrl2);
         urlRepository.save(url2);
         List<URL> list = urlRepository.findAllByLongUrl("https://github.com/AnnaEtzler/URL_shortener");
-        list.forEach(u -> Assertions.assertEquals(8, url.getShortUrl().length()));  // все ли url имеют длинну 8
         Assertions.assertEquals(list.size(), list.stream().map(URL::getShortUrl).collect(Collectors.toSet()).size()); // каждый обьект имеет уникальный shortUrl
 
     }

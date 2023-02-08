@@ -24,7 +24,7 @@ public class URL {
     private Long id;
     @Column(name = "shortUrl")
     private String shortUrl;
-    @Column(name = "longUrl")
+    @Column(name = "longUrl", columnDefinition = "varchar(3000)")
     @NotBlank
     private String longUrl;
     @Column(name = "time")
