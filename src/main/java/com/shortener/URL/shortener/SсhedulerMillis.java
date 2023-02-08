@@ -5,16 +5,17 @@ import com.shortener.URL.shortener.repository.URLRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
-public class ShedulerMillis {
+@Service
+public class SсhedulerMillis {
     @Autowired
     URLRepository urlRepository;
 
 
-    @Scheduled(fixedRate = 300000) // на 5 минут
+    @Scheduled(cron="@monthly") // каждый месяц
     public void wakeUp() {
         long minMillis = System.currentTimeMillis() - 5;  // 30*24*3600
         List<URL> oldUrlsToDelete = urlRepository.findByMillisLessThan(minMillis);

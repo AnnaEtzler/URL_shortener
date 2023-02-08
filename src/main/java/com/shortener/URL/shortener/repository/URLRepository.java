@@ -13,5 +13,7 @@ import java.util.List;
 public interface URLRepository extends JpaRepository<URL, String> {
      URL findByShortUrl (String url);
      URL findByLongUrl(String longUrl);
+
+     List<URL> findAllByLongUrl(String url);
      List<URL> findByMillisLessThan(long time);
 }
