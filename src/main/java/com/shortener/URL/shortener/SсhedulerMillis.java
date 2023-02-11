@@ -15,9 +15,10 @@ public class SсhedulerMillis {
     URLRepository urlRepository;
 
 
-    @Scheduled(cron="@monthly") // каждый месяц
+    @Scheduled(cron="@daily") // каждый день
     public void wakeUp() {
-        long minMillis = System.currentTimeMillis() - 5;  // 30*24*3600
+        long l = 2_592_000_000l;
+        long minMillis = System.currentTimeMillis() - l;  // 1 мин -> 60 000 ms, 60 000 * 60 * 24 (сутки) * 30 месяц
         List<URL> oldUrlsToDelete = urlRepository.findByMillisLessThan(minMillis);
         urlRepository.deleteAll(oldUrlsToDelete);
     }

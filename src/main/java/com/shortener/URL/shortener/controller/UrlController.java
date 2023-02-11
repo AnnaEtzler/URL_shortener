@@ -80,13 +80,4 @@ public class UrlController extends SQLException{
     }
 
 
-    @GetMapping("{link}")
-    public String getPageWithLongURL(@PathVariable(name = "link") String link) {
-        //URL url = urlRepository.findByShortUrl(link);
-        return "redirect:" + link;
-    }
-
-
-
-
 }
