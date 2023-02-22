@@ -36,6 +36,8 @@ public class UrlController extends SQLException{
         model.addAttribute("url", new URL());
         return "guest";
     }
+
+    /*
     @GetMapping("/your_urls/{shortUrl}")
     public String getAllUrl(@PathVariable(name = "shortUrl") String shortUrl, Model model) {
         URL url = urlRepository.findByShortUrl(shortUrl);
@@ -45,6 +47,8 @@ public class UrlController extends SQLException{
 
         return "your_urls";
     }
+
+     */
 
     @PostMapping("/shorter")
     public String shortUrl(@ModelAttribute("url") @Valid URL url, BindingResult bindingResult, Model model) {
@@ -77,6 +81,20 @@ public class UrlController extends SQLException{
     public String getPageWithShortURL(@PathVariable(name = "link") String link) {
         URL url = urlRepository.findByShortUrl(link);
         return "redirect:" + url.getLongUrl();
+    }
+
+
+    @GetMapping("/your_urls/{shortUrl}")
+    public String getAllUrl(@PathVariable(name = "shortUrl") String shortUrl, Model model) {
+        URL url = urlRepository.findByShortUrl(shortUrl);
+
+        if(url != null)
+        {
+            model.addAttribute("shortUrl", url.getShortUrl());
+            model.addAttribute("longUrl", url.getLongUrl());
+        }
+
+        return "your_urls";
     }
 
 

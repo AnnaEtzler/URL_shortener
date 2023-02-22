@@ -1,14 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="./styles-index.css">
+
 </head>
 <body>
-<header> URL shortener </header>
-<div>login</div>
-<div><a href="guest"/> without registration </div>
+
+<header class="header"> URL shortener </header>
+<main>
+    <div class="parent">
+
+        <form class="tabelle">
+            <label for="login" > Login </label>
+            <input type="text" th:field="*{login}" id="login">
+            <br>
+            <label for="passwort" > Passwort</label>
+            <input type="text" th:field="*{passwort}" id="passwort">
+            <input type="submit" value="GO">
+        </form>
+
+        <a href="guest"/> without registration </a>
 
 
+    </div>
+
+</main>
 </body>
 </html>
