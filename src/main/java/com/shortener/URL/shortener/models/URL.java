@@ -31,8 +31,5 @@ public class URL {
     private Long millis = System.currentTimeMillis();
 
 
-
-
-
 }
 

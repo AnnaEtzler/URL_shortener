@@ -37,19 +37,6 @@ public class UrlController extends SQLException{
         return "guest";
     }
 
-    /*
-    @GetMapping("/your_urls/{shortUrl}")
-    public String getAllUrl(@PathVariable(name = "shortUrl") String shortUrl, Model model) {
-        URL url = urlRepository.findByShortUrl(shortUrl);
-
-        model.addAttribute("shortUrl", url.getShortUrl());
-        model.addAttribute("longUrl", url.getLongUrl());
-
-        return "your_urls";
-    }
-
-     */
-
     @PostMapping("/shorter")
     public String shortUrl(@ModelAttribute("url") @Valid URL url, BindingResult bindingResult, Model model) {
         URL u = (URL) model.getAttribute("url");
@@ -57,22 +44,20 @@ public class UrlController extends SQLException{
         if (bindingResult.hasErrors() || u == null) {
             return "redirect:/guest";
         }
-        if (u.getShortUrl().equals("")) {  // норм так делать?
+        if (u.getShortUrl().equals("")) {
             String shortUrl = urlService.generateShortUrl(u.getLongUrl());
             while (urlService.checkShortUrl(shortUrl)) {
                 shortUrl = urlService.changeShortUrl(shortUrl);
             }
             u.setShortUrl(shortUrl);
         }
+        if (urlRepository.findByShortUrl(u.getShortUrl()) != null){
+            model.addAttribute("message", "this name is not available");
+            return "/guest";
+        }
+
         model.addAttribute("short", u.getShortUrl());
-        try{
         urlRepository.save(u);
-
-        }
-        catch (Exception exeption){ // не получается вставаить SqLExeption  и close()
-            return "redirect:/guest";
-
-        }
 
         return "redirect:/your_urls/"+u.getShortUrl();
     }
